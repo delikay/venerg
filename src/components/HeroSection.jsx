@@ -83,7 +83,7 @@ const HeroSection = () => {
               alt="Solar farm from above"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
+              fetchPriority="low"
               className={`${cardBaseClasses} rotate-[24deg]`}
               animate={
                 shouldReduceMotion

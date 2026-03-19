@@ -20,9 +20,7 @@ const HomePage = () => {
         <ServicesSection />
       </div>
       <ProjectSection />
-      <div id="contact">
-        <ContactSection />
-      </div>
+      <ContactSection />
       <FooterSection />
     </main>
   )
