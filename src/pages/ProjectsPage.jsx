@@ -26,6 +26,8 @@ const ProjectsPage = () => {
             <img
               src={featuredProject.image}
               alt={featuredProject.title}
+              decoding="async"
+              fetchPriority="high"
               className="h-80 w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#07140f] via-[#0e2b22]/55 to-transparent" />
@@ -64,7 +66,13 @@ const ProjectsPage = () => {
                 key={project.title}
                 className="overflow-hidden rounded-3xl border border-[#123830]/10 bg-white shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
               >
-                <img src={project.image} alt={project.title} className="h-44 w-full object-cover" />
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-44 w-full object-cover"
+                />
                 <div className="space-y-3 p-5">
                   <h3 className="text-xl font-semibold leading-tight text-[#123830]">{project.title}</h3>
                   <div className="flex flex-wrap items-center gap-4 text-sm text-[#123830]/80">

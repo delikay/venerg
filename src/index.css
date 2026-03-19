@@ -3,15 +3,25 @@
 
 @import "tailwindcss";
 
-*{
-    font-family: 'Manrope', sans-serif;
-    font-weight: 500;
+*,
+*::before,
+*::after{
     box-sizing: border-box;
+}
+
+html {
     scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }
 
 body{
     margin: 0;
+    font-family: 'Manrope', sans-serif;
     background-color: #ebebeb;
     color: #123830;
     overflow-x: hidden;

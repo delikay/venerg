@@ -3,19 +3,25 @@ import { motion, useReducedMotion } from 'framer-motion'
 import logo from '../assets/logo.png'
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Facebook', icon: Facebook, href: '#' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/' },
+  { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/' },
 ]
 
-const quickLinks = ['Home', 'About', 'Services', 'Projects', 'Contact']
+const quickLinks = [
+  { label: 'Home', href: '/#home' },
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Contact', href: '/#contact' },
+]
 
 const serviceLinks = [
-  'Solar & Inverter Installation',
-  'Electric Fence / Barb Wire',
-  'CCTV Installation',
-  'Office Intercom',
-  'Solar Accessories Sales',
+  { label: 'Solar & Inverter Installation', href: '/#services' },
+  { label: 'Electric Fence / Barb Wire', href: '/#services' },
+  { label: 'CCTV Installation', href: '/#services' },
+  { label: 'Office Intercom', href: '/#services' },
+  { label: 'Solar Accessories Sales', href: '/#services' },
 ]
 
 const FooterSection = () => {
@@ -51,8 +57,8 @@ const FooterSection = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={fadeInUp} className="space-y-5">
-            <a href="#" aria-label="Home">
-              <img src={logo} alt="Company logo" className="h-8 w-auto sm:h-9" />
+            <a href="/#home" aria-label="Home">
+              <img src={logo} alt="Company logo" loading="lazy" decoding="async" className="h-8 w-auto sm:h-9" />
             </a>
             <p className="max-w-xs text-sm leading-7 text-white/80">
               Reliable power and security solutions for homes and businesses.
@@ -61,15 +67,26 @@ const FooterSection = () => {
             <div className="space-y-3 text-sm text-white/85">
               <p className="inline-flex items-center gap-2">
                 <Mail size={14} />
-                hello@venergi.com.ng
+                <a href="mailto:hello@venergi.com.ng" className="hover:underline">
+                  hello@venergi.com.ng
+                </a>
               </p>
               <p className="inline-flex items-center gap-2">
                 <Phone size={14} />
-                +234 800 123 4567
+                <a href="tel:+2348001234567" className="hover:underline">
+                  +234 800 123 4567
+                </a>
               </p>
               <p className="inline-flex items-center gap-2">
                 <MapPin size={14} />
-                Victoria Island, Lagos
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Victoria+Island+Lagos"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline"
+                >
+                  Victoria Island, Lagos
+                </a>
               </p>
             </div>
           </motion.div>
@@ -78,9 +95,9 @@ const FooterSection = () => {
             <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">Quick Links</h3>
             <ul className="mt-4 space-y-3 text-sm text-white/80">
               {quickLinks.map((item) => (
-                <li key={item}>
-                  <a href="#" className="transition-opacity hover:opacity-70">
-                    {item}
+                <li key={item.label}>
+                  <a href={item.href} className="transition-opacity hover:opacity-70">
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -91,9 +108,9 @@ const FooterSection = () => {
             <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">Services</h3>
             <ul className="mt-4 space-y-3 text-sm text-white/80">
               {serviceLinks.map((item) => (
-                <li key={item}>
-                  <a href="#" className="transition-opacity hover:opacity-70">
-                    {item}
+                <li key={item.label}>
+                  <a href={item.href} className="transition-opacity hover:opacity-70">
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -108,6 +125,8 @@ const FooterSection = () => {
                   key={name}
                   href={href}
                   aria-label={name}
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white hover:text-[#123830]"
                 >
                   <Icon size={16} />

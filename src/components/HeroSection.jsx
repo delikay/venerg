@@ -57,6 +57,9 @@ const HeroSection = () => {
             <motion.img
               src={heroTopImage}
               alt="Solar panels under blue sky"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className={`${cardBaseClasses} -rotate-12 lg:ml-[-7rem]`}
               animate={
                 shouldReduceMotion
@@ -78,6 +81,9 @@ const HeroSection = () => {
             <motion.img
               src={heroBottomImage}
               alt="Solar farm from above"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className={`${cardBaseClasses} rotate-[24deg]`}
               animate={
                 shouldReduceMotion

@@ -14,7 +14,11 @@ const navItems = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeHash, setActiveHash] = useState('')
+  const [activeHash, setActiveHash] = useState(() => {
+    const path = window.location.pathname.replace(/\/+$/, '') || '/'
+    if (path === '/projects') return '/projects'
+    return `/${window.location.hash || '#home'}`
+  })
   const shouldReduceMotion = useReducedMotion()
 
   const normalizedPath = window.location.pathname.replace(/\/+$/, '') || '/'
@@ -28,10 +32,13 @@ const Navbar = () => {
   }, [isProjectsPage])
 
   useEffect(() => {
-    setActiveHash(getActiveLink())
     const handleHashChange = () => setActiveHash(getActiveLink())
     window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    window.addEventListener('popstate', handleHashChange)
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+      window.removeEventListener('popstate', handleHashChange)
+    }
   }, [getActiveLink])
 
   useEffect(() => {

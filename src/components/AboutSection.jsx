@@ -87,9 +87,30 @@ const AboutSection = () => {
           </motion.div>
 
           <motion.div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:justify-end" variants={staggerVariants}>
-            <motion.img variants={fadeInUp} src={aboutLeftImage} alt="Rows of solar panels" className={`${imageBaseClasses} -rotate-[23deg]`} />
-            <motion.img variants={fadeInUp} src={aboutCenterImage} alt="Blue sky over solar array" className={`${imageBaseClasses} -rotate-[24deg]`} />
-            <motion.img variants={fadeInUp} src={aboutRightImage} alt="Wind turbines and clean energy" className={`${imageBaseClasses} rotate-[26deg]`} />
+            <motion.img
+              variants={fadeInUp}
+              src={aboutLeftImage}
+              alt="Rows of solar panels"
+              loading="lazy"
+              decoding="async"
+              className={`${imageBaseClasses} -rotate-[23deg]`}
+            />
+            <motion.img
+              variants={fadeInUp}
+              src={aboutCenterImage}
+              alt="Blue sky over solar array"
+              loading="lazy"
+              decoding="async"
+              className={`${imageBaseClasses} -rotate-[24deg]`}
+            />
+            <motion.img
+              variants={fadeInUp}
+              src={aboutRightImage}
+              alt="Wind turbines and clean energy"
+              loading="lazy"
+              decoding="async"
+              className={`${imageBaseClasses} rotate-[26deg]`}
+            />
           </motion.div>
         </motion.div>
       </motion.div>

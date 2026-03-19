@@ -1,6 +1,6 @@
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 const serviceOptions = [
   'Solar and Inverter System Installation',
@@ -12,9 +12,20 @@ const serviceOptions = [
 
 const ContactSection = () => {
   const shouldReduceMotion = useReducedMotion()
-  const [isSubjectOpen, setIsSubjectOpen] = useState(false)
-  const [selectedService, setSelectedService] = useState('')
-  const subjectMenuRef = useRef(null)
+  const [formState, setFormState] = useState({
+    name: '',
+    email: '',
+    service: '',
+    message: '',
+  })
+  const [submitState, setSubmitState] = useState('idle')
+  const [submitMessage, setSubmitMessage] = useState('')
+
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'hello@venergi.com.ng'
+  const submitEndpoint = useMemo(() => {
+    if (import.meta.env.VITE_CONTACT_ENDPOINT) return import.meta.env.VITE_CONTACT_ENDPOINT
+    return `https://formsubmit.co/ajax/${contactEmail}`
+  }, [contactEmail])
 
   const fadeInUp = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
@@ -35,27 +46,53 @@ const ContactSection = () => {
     },
   }
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (subjectMenuRef.current && !subjectMenuRef.current.contains(event.target)) {
-        setIsSubjectOpen(false)
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormState((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setSubmitState('loading')
+    setSubmitMessage('')
+
+    try {
+      const response = await fetch(submitEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          service: formState.service,
+          message: formState.message,
+          _subject: `New website enquiry: ${formState.service}`,
+          _captcha: 'false',
+        }),
+      })
+
+      const payload = await response.json().catch(() => null)
+      if (!response.ok || payload?.success === false || payload?.success === 'false') {
+        throw new Error('Submission failed')
       }
-    }
 
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') {
-        setIsSubjectOpen(false)
-      }
+      setFormState({
+        name: '',
+        email: '',
+        service: '',
+        message: '',
+      })
+      setSubmitState('success')
+      setSubmitMessage('Message sent successfully. We will get back to you shortly.')
+    } catch {
+      setSubmitState('error')
+      setSubmitMessage(
+        `We could not send your message right now. Please email us directly at ${contactEmail}.`,
+      )
     }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('keydown', handleEscape)
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('keydown', handleEscape)
-    }
-  }, [])
+  }
 
   return (
     <section id="contact" className="bg-[#f3f6f4] px-6 py-16 sm:px-10 lg:px-14 lg:py-24">
@@ -66,12 +103,25 @@ const ContactSection = () => {
         whileInView="show"
         viewport={{ once: true, amount: 0.35 }}
       >
-        <motion.form className="space-y-4" onSubmit={(event) => event.preventDefault()} variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+        <motion.form
+          className="space-y-4"
+          onSubmit={handleSubmit}
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.35 }}
+        >
           <motion.label variants={fadeInUp} className="block text-sm font-semibold text-[#123830]">
             Name
             <input
               type="text"
+              name="name"
               placeholder="Your full name"
+              value={formState.name}
+              onChange={handleChange}
+              autoComplete="name"
+              minLength={2}
+              required
               className="mt-2 w-full rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
             />
           </motion.label>
@@ -80,62 +130,46 @@ const ContactSection = () => {
             Email
             <input
               type="email"
+              name="email"
               placeholder="you@example.com"
+              value={formState.email}
+              onChange={handleChange}
+              autoComplete="email"
+              required
               className="mt-2 w-full rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
             />
           </motion.label>
 
           <motion.label variants={fadeInUp} className="block text-sm font-semibold text-[#123830]">
-            Subject
-            <div className="relative mt-2" ref={subjectMenuRef}>
-              <input type="hidden" name="subject" value={selectedService} />
-              <button
-                type="button"
-                className="flex w-full items-center justify-between rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-left text-sm font-medium text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
-                aria-haspopup="listbox"
-                aria-expanded={isSubjectOpen}
-                onClick={() => setIsSubjectOpen((open) => !open)}
-              >
-                <span className={selectedService ? 'text-[#123830]' : 'text-[#123830]/60'}>
-                  {selectedService || 'Select a service'}
-                </span>
-                <ChevronDown size={16} className={`text-[#123830]/75 transition-transform ${isSubjectOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              <div
-                className={`absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-[#123830]/12 bg-[#f3f6f4] p-2 shadow-[0_18px_44px_rgba(0,0,0,0.14)] transition-all duration-200 ${isSubjectOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1 opacity-0'}`}
-              >
-                <ul className="max-h-64 space-y-1 overflow-y-auto" role="listbox" aria-label="Service subject options">
-                  {serviceOptions.map((service) => (
-                    <li key={service}>
-                      <button
-                        type="button"
-                        className={`w-full rounded-xl px-3 py-2.5 text-left text-sm leading-5 transition ${
-                          selectedService === service
-                            ? 'bg-[#123830] font-medium text-white shadow-[0_10px_24px_rgba(8,30,24,0.26)]'
-                            : 'text-[#123830] hover:bg-[#dbe8e3]'
-                        }`}
-                        role="option"
-                        aria-selected={selectedService === service}
-                        onClick={() => {
-                          setSelectedService(service)
-                          setIsSubjectOpen(false)
-                        }}
-                      >
-                        {service}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            Service
+            <select
+              name="service"
+              value={formState.service}
+              onChange={handleChange}
+              required
+              className="mt-2 w-full rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
+            >
+              <option value="" disabled>
+                Select a service
+              </option>
+              {serviceOptions.map((service) => (
+                <option key={service} value={service}>
+                  {service}
+                </option>
+              ))}
+            </select>
           </motion.label>
 
           <motion.label variants={fadeInUp} className="block text-sm font-semibold text-[#123830]">
             Message
             <textarea
+              name="message"
               rows={5}
               placeholder="Tell us about your project"
+              value={formState.message}
+              onChange={handleChange}
+              minLength={20}
+              required
               className="mt-2 w-full resize-none rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
             />
           </motion.label>
@@ -143,13 +177,25 @@ const ContactSection = () => {
           <motion.button
             variants={fadeInUp}
             type="submit"
+            disabled={submitState === 'loading'}
             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#153728] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#0f2a20]"
             whileHover={shouldReduceMotion ? undefined : { y: -2 }}
             whileTap={shouldReduceMotion ? undefined : { scale: 0.99 }}
           >
-            Send message
+            {submitState === 'loading' ? 'Sending...' : 'Send message'}
             <ArrowRight size={15} />
           </motion.button>
+
+          {submitMessage && (
+            <motion.p
+              variants={fadeInUp}
+              className={`text-sm ${submitState === 'error' ? 'text-red-600' : 'text-[#123830]/85'}`}
+              role="status"
+              aria-live="polite"
+            >
+              {submitMessage}
+            </motion.p>
+          )}
         </motion.form>
       </motion.div>
     </section>
