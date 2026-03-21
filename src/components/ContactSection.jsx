@@ -15,6 +15,7 @@ const ContactSection = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
+    phone: '',
     service: '',
     message: '',
   })
@@ -63,6 +64,7 @@ const ContactSection = () => {
         body: JSON.stringify({
           name: formState.name,
           email: formState.email,
+          phone: formState.phone,
           service: formState.service,
           message: formState.message,
           _subject: `New website enquiry: ${formState.service}`,
@@ -78,6 +80,7 @@ const ContactSection = () => {
       setFormState({
         name: '',
         email: '',
+        phone: '',
         service: '',
         message: '',
       })
@@ -132,6 +135,21 @@ const ContactSection = () => {
               value={formState.email}
               onChange={handleChange}
               autoComplete="email"
+              required
+              className="mt-2 w-full rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
+            />
+          </motion.label>
+
+          <motion.label variants={fadeInUp} className="block text-sm font-semibold text-[#123830]">
+            Phone Number
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Enter your phone number"
+              value={formState.phone}
+              onChange={handleChange}
+              autoComplete="tel"
+              minLength={7}
               required
               className="mt-2 w-full rounded-xl border border-[#123830]/15 bg-white px-4 py-3 text-sm text-[#123830] outline-none ring-[#123830]/30 transition focus:ring-2"
             />
