@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 const serviceOptions = [
   'Solar and Inverter System Installation',
@@ -21,11 +21,8 @@ const ContactSection = () => {
   const [submitState, setSubmitState] = useState('idle')
   const [submitMessage, setSubmitMessage] = useState('')
 
-  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'hello@venergi.com.ng'
-  const submitEndpoint = useMemo(() => {
-    if (import.meta.env.VITE_CONTACT_ENDPOINT) return import.meta.env.VITE_CONTACT_ENDPOINT
-    return `https://formsubmit.co/ajax/${contactEmail}`
-  }, [contactEmail])
+  const contactEmail = 'venergielectric@gmail.com'
+  const submitEndpoint = `https://formsubmit.co/ajax/${contactEmail}`
 
   const fadeInUp = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
@@ -116,7 +113,7 @@ const ContactSection = () => {
             <input
               type="text"
               name="name"
-              placeholder="Your full name"
+              placeholder="Enter your name"
               value={formState.name}
               onChange={handleChange}
               autoComplete="name"
@@ -131,7 +128,7 @@ const ContactSection = () => {
             <input
               type="email"
               name="email"
-              placeholder="you@example.com"
+              placeholder="Enter your email"
               value={formState.email}
               onChange={handleChange}
               autoComplete="email"
