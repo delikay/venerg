@@ -30,7 +30,7 @@ const ProjectsPage = () => {
         <div className="mx-auto max-w-[1120px] space-y-8">
           <div className="space-y-4">
             <a href="/#projects" className="inline-flex text-sm font-medium text-[#123830] transition-opacity hover:opacity-75">
-              Back to home projects
+              Back to home
             </a>
             <h1 className="text-[clamp(2.3rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-[#123830]">
               All Projects
