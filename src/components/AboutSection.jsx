@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import aboutLeftImage from '../assets/about_solar.jpg'
 import aboutCenterImage from '../assets/herobanner2.jpg'
-import aboutRightImage from '../assets/about-wind.jpg'
+import aboutRightImage from '../assets/about-wind.webp'
 
 const imageBaseClasses =
   'h-40 w-36 rounded-3xl object-cover shadow-[0_18px_36px_rgba(0,0,0,0.35)] sm:h-52 sm:w-44 lg:h-56 lg:w-48'
