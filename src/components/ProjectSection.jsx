@@ -1,9 +1,26 @@
-import { ArrowRight, CalendarDays, MapPin, Zap } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowRight, CalendarDays, Images, MapPin } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
+import ProjectGalleryModal from './ProjectGalleryModal'
 import { featuredProject, projects, projectStats } from '../data/projects'
 
 const ProjectSection = () => {
+  const [activeGallery, setActiveGallery] = useState(null)
   const shouldReduceMotion = useReducedMotion()
+
+  const openGallery = (project, startIndex = 0) => {
+    if (!project.gallery.length) return
+
+    setActiveGallery({
+      title: project.title,
+      images: project.gallery,
+      startIndex,
+    })
+  }
+
+  const closeGallery = () => {
+    setActiveGallery(null)
+  }
 
   const fadeInUp = {
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
@@ -39,7 +56,7 @@ const ProjectSection = () => {
               Projects
             </span>
             <h2 className="max-w-3xl text-[clamp(2rem,5vw,4rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-[#123830]">
-              Real installations powering communities, homes, and business operations
+              Recent inverter, battery, and solar installations across homes and commercial sites
             </h2>
           </div>
 
@@ -60,16 +77,25 @@ const ProjectSection = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.article variants={fadeInUp} className="group relative overflow-hidden rounded-3xl bg-[#123830] text-white">
-            <img
-              src={featuredProject.image}
-              alt="Large solar installation in open field"
-              loading="lazy"
-              decoding="async"
-              className="h-72 w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 sm:h-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#07140f] via-[#0e2b22]/55 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Featured Project</p>
+            <button
+              type="button"
+              onClick={() => openGallery(featuredProject)}
+              className="block w-full text-left"
+              aria-label={`Open ${featuredProject.title} photo gallery`}
+            >
+              <img
+                src={featuredProject.image}
+                alt={featuredProject.title}
+                loading="lazy"
+                decoding="async"
+                className="h-[28rem] w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 sm:h-[32rem]"
+              />
+            </button>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07140f] via-[#0e2b22]/55 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 sm:p-8">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+                Featured {featuredProject.type} Installation
+              </p>
               <h3 className="text-2xl font-semibold leading-tight sm:text-3xl">{featuredProject.title}</h3>
               <div className="mt-4 flex flex-wrap gap-4 text-sm text-white/90">
                 <span className="inline-flex items-center gap-2">
@@ -78,13 +104,19 @@ const ProjectSection = () => {
                 </span>
                 <span className="inline-flex items-center gap-2">
                   <CalendarDays size={14} />
-                  {featuredProject.year}
+                  {featuredProject.dateLabel}
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <Zap size={14} />
-                  {featuredProject.capacity}
+                  <Images size={14} />
+                  {featuredProject.photoCount} photos
                 </span>
               </div>
+              <p className="mt-4 max-w-2xl text-sm leading-6 text-white/85">{featuredProject.description}</p>
+              {featuredProject.photoCount > 1 ? (
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/75">
+                  Click image to view all photos
+                </p>
+              ) : null}
             </div>
           </motion.article>
 
@@ -111,13 +143,25 @@ const ProjectSection = () => {
               key={project.title}
               className="overflow-hidden rounded-3xl border border-[#123830]/10 bg-white shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
             >
-              <img
-                src={project.image}
-                alt={project.title}
-                loading="lazy"
-                decoding="async"
-                className="h-44 w-full object-cover"
-              />
+              <button
+                type="button"
+                onClick={() => openGallery(project)}
+                className="relative block w-full text-left"
+                aria-label={`Open ${project.title} photo gallery`}
+              >
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-44 w-full object-cover"
+                />
+                {project.photoCount > 1 ? (
+                  <span className="absolute bottom-3 right-3 rounded-full bg-[#04120d]/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">
+                    View all {project.photoCount}
+                  </span>
+                ) : null}
+              </button>
               <div className="space-y-3 p-5">
                 <h3 className="text-xl font-semibold leading-tight text-[#123830]">{project.title}</h3>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-[#123830]/80">
@@ -127,18 +171,29 @@ const ProjectSection = () => {
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <CalendarDays size={14} />
-                    {project.year}
+                    {project.dateLabel}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <Zap size={14} />
-                    {project.capacity}
+                    <Images size={14} />
+                    {project.photoCount} photos
                   </span>
                 </div>
+                <p className="text-sm leading-6 text-[#123830]/80">{project.description}</p>
               </div>
             </motion.article>
           ))}
         </motion.div>
       </div>
+
+      {activeGallery ? (
+        <ProjectGalleryModal
+          isOpen
+          images={activeGallery.images}
+          title={activeGallery.title}
+          initialIndex={activeGallery.startIndex}
+          onClose={closeGallery}
+        />
+      ) : null}
     </section>
   )
 }
