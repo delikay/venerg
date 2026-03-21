@@ -1,0 +1,57 @@
+[{
+  "Project_name": "10kva and 15kWh installation for residential property",
+  "Pictures": ["A1.webp", "A2.webp", "A3.webp", "A4.webp"],
+  "description": "This project involves the installation of a 10kva generator and a 15kWh battery system in Ibadan, Nigeria. The installation is designed to provide reliable power supply to a residential, ensuring uninterrupted electricity even during power outages.",
+  "location": "Ibadan, Nigeria",
+  "date": "2026-02"
+},
+{
+  "Project_name": "3.6kwh and 2.6kWh installation for residential property",
+  "Pictures": ["B1.webp", "B2.webp", "B3.webp", "B4.webp"],
+  "description": "This project involves the installation of a 3.6kwh solar panel system and a 2.6kWh battery system in Ado Ekiti, Nigeria. The installation is designed to provide reliable power supply to a residential property, ensuring uninterrupted electricity for daily use.",
+  "location": "Ado Ekiti, Nigeria",
+  "date": "2025-12"
+},
+{
+  "Project_name": "5kva and 10kwh installation for commercial property>",
+  "Pictures": ["F1.webp", "F2.webp"],
+"description": "This project involves the installation of a 5kva generator and a 10kwh battery system in Lagos, Nigeria. The installation is designed to provide reliable power supply to a commercial property, ensuring uninterrupted electricity for business operations.",
+  "location": "Lagos, Nigeria",
+  "date": "2025-04"
+},
+{
+  "Project_name": "5kva and 5kwh installation for residential property",
+  "Pictures": ["H1.webp", "H2.webp", "H4.webp"],
+"description": "A 5kva inverter and 5kwh battery system installation for a residential property in Abuja, Nigeria, providing reliable backup power for daily household needs.",
+  "location": "Abuja, Nigeria",
+  "date": "2022-05"
+},
+{
+  "Project_name": "3.5kva and 4kwh installation for residential property",
+  "Pictures": ["I1.webp", "I2.webp"],
+  "description": "This project involves the installation of a 3.5kva generator and a 4kwh battery system in Port Harcourt, Nigeria. The installation is designed to provide reliable power supply to a residential property, ensuring uninterrupted electricity for daily use.",
+  "location": "Lagos, Nigeria",
+  "date": "2025-06"
+},
+{
+  "Project_name": "3kva and 5kwh installation for residential property",
+  "Pictures": ["J1.webp", "J2.webp", "J3.webp", "J4.webp"],
+"description": "A 3kva inverter and 5kwh battery system installation for a residential property in Lagos, Nigeria, delivering dependable backup power for household electricity needs.",
+  "location": "Lagos, Nigeria",
+  "date": "2025-07"
+},
+{
+  "Project_name": "2.5kva and 5kwh installation for residential property",
+  "Pictures": ["K1.webp", "K2.webp", "K3.webp", "K4.webp"],
+"description": "A 2.5kva inverter and 5kwh battery system installation for a residential property in Ikoro Ekiti, Nigeria, ensuring reliable backup power for household electricity needs.",
+  "location": "Ikoro Ekiti, Nigeria",
+  "date": "2024-08"
+},
+{
+  "Project_name": "3.5kva and 4kwh installation for residential property",
+  "Pictures": ["L1.webp", "L2.webp", "L3.webp"],
+"description": "This project involves the installation of a 3.5kva inverter and 4kwh battery system for a residential property in Port Harcourt, Nigeria. The system provides dependable backup power to ensure uninterrupted electricity supply for household needs.",
+  "location": "Port Harcourt, Nigeria",
+  "date": "2025-06"
+}
+]
