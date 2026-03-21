@@ -67,7 +67,7 @@ const FooterSection = () => {
               </p>
               <p className="inline-flex items-center gap-2">
                 <Phone size={14} />
-                <a href="tel:+2348001234567" className="hover:underline">
+                <a href="tel:+2348144196054" className="hover:underline">
                   +2348144196054
                 </a>
               </p>

@@ -140,7 +140,7 @@ const ProjectSection = () => {
           {projects.slice(0, 3).map((project) => (
             <motion.article
               variants={fadeInUp}
-              key={project.title}
+              key={project.id}
               className="overflow-hidden rounded-3xl border border-[#123830]/10 bg-white shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
             >
               <button

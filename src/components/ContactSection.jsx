@@ -183,16 +183,24 @@ const ContactSection = () => {
             <ArrowRight size={15} />
           </motion.button>
 
-          {submitMessage && (
-            <motion.p
-              variants={fadeInUp}
-              className={`text-sm ${submitState === 'error' ? 'text-red-600' : 'text-[#123830]/85'}`}
-              role="status"
-              aria-live="polite"
+          <div className="h-16">
+            <p
+              className={`text-sm leading-5 transition-opacity ${
+                submitState === 'error' ? 'text-red-600' : 'text-[#123830]/85'
+              } ${submitMessage ? 'opacity-100' : 'opacity-0'}`}
+              role={submitMessage ? 'status' : undefined}
+              aria-live={
+                submitMessage
+                  ? submitState === 'error'
+                    ? 'assertive'
+                    : 'polite'
+                  : undefined
+              }
+              aria-atomic={submitMessage ? 'true' : undefined}
             >
-              {submitMessage}
-            </motion.p>
-          )}
+              {submitMessage || '\u00A0'}
+            </p>
+          </div>
         </motion.form>
       </motion.div>
     </section>

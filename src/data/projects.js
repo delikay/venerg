@@ -44,6 +44,28 @@ const slugify = (value) =>
     .replace(/^-+|-+$/g, '')
 
 const sortedDetails = [...details].sort((left, right) => right.date.localeCompare(left.date))
+const usedProjectIds = new Set()
+
+const getUniqueProjectId = (project, index, title) => {
+  const baseId =
+    slugify(`${title}-${project.date ?? ''}-${project.location ?? ''}`) || `project-${index + 1}`
+
+  if (!usedProjectIds.has(baseId)) {
+    usedProjectIds.add(baseId)
+    return baseId
+  }
+
+  let suffix = 2
+  let candidate = `${baseId}-${suffix}`
+
+  while (usedProjectIds.has(candidate)) {
+    suffix += 1
+    candidate = `${baseId}-${suffix}`
+  }
+
+  usedProjectIds.add(candidate)
+  return candidate
+}
 
 export const allProjects = sortedDetails.map((project, index) => {
   const title = (project.Project_name ?? `Project ${index + 1}`).replace(/>+$/, '').trim()
@@ -51,7 +73,7 @@ export const allProjects = sortedDetails.map((project, index) => {
   const gallery = pictureNames.map((name) => imagesByFileName[name]).filter(Boolean)
 
   return {
-    id: slugify(title) || `project-${index + 1}`,
+    id: getUniqueProjectId(project, index, title),
     title,
     location: project.location ?? 'Location unavailable',
     rawDate: project.date ?? '',
@@ -61,7 +83,7 @@ export const allProjects = sortedDetails.map((project, index) => {
     image: gallery[0] ?? fallbackImage,
     gallery,
     pictureNames,
-    photoCount: pictureNames.length,
+    photoCount: gallery.length,
   }
 })
 
