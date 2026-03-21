@@ -1,12 +1,6 @@
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import { motion, useReducedMotion } from 'framer-motion'
 import logo from '../assets/logo.png'
-
-const socials = [
-  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/' },
-  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/' },
-  { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/' },
-]
 
 const quickLinks = [
   { label: 'Home', href: '/#home' },
@@ -67,27 +61,17 @@ const FooterSection = () => {
             <div className="space-y-3 text-sm text-white/85">
               <p className="inline-flex items-center gap-2">
                 <Mail size={14} />
-                <a href="mailto:hello@venergi.com.ng" className="hover:underline">
-                  hello@venergi.com.ng
+                <a href="mailto:venergielectric@gmail.com" className="hover:underline">
+                  venergielectric@gmail.com
                 </a>
               </p>
               <p className="inline-flex items-center gap-2">
                 <Phone size={14} />
                 <a href="tel:+2348001234567" className="hover:underline">
-                  +234 800 123 4567
+                  +2348144196054
                 </a>
               </p>
-              <p className="inline-flex items-center gap-2">
-                <MapPin size={14} />
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=Victoria+Island+Lagos"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:underline"
-                >
-                  Victoria Island, Lagos
-                </a>
-              </p>
+              <p>Lagos, Nigeria</p>
             </div>
           </motion.div>
 
@@ -118,21 +102,7 @@ const FooterSection = () => {
           </motion.div>
 
           <motion.div variants={fadeInUp} className="space-y-5">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">Follow Us</h3>
-            <div className="flex items-center gap-3">
-              {socials.map(({ name, icon: Icon, href }) => (
-                <a
-                  key={name}
-                  href={href}
-                  aria-label={name}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white hover:text-[#123830]"
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">Business Hours</h3>
             <p className="text-sm leading-7 text-white/75">
               Open Monday to Saturday, 8:00 AM to 6:00 PM.
             </p>
