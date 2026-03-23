@@ -3,11 +3,13 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
+  const [isImageLoading, setIsImageLoading] = useState(true)
   const totalImages = images.length
 
   // Sync state with initialIndex prop when it changes
   useEffect(() => {
     setCurrentIndex(initialIndex)
+    setIsImageLoading(true)
   }, [initialIndex])
 
   useEffect(() => {
@@ -50,6 +52,11 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
     preloadNext.src = images[nextIndex]
     preloadPrevious.src = images[previousIndex]
   }, [currentIndex, images, isOpen, totalImages])
+
+  useEffect(() => {
+    if (!isOpen) return
+    setIsImageLoading(true)
+  }, [currentIndex, isOpen])
 
   if (!isOpen || !totalImages) return null
 
@@ -100,14 +107,27 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
           </>
         ) : null}
 
-        <img
-          src={images[currentIndex]}
-          alt={`${title} image ${currentIndex + 1}`}
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          className="mx-auto block max-h-[76vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_18px_50px_rgba(0,0,0,0.45)]"
-        />
+        <div className="relative flex min-h-[320px] items-center justify-center sm:min-h-[420px]">
+          {isImageLoading ? (
+            <div
+              className="absolute inset-0 mx-auto h-full max-h-[76vh] w-full max-w-full animate-pulse rounded-2xl bg-[linear-gradient(110deg,rgba(255,255,255,0.12),rgba(255,255,255,0.2),rgba(255,255,255,0.12))]"
+              aria-hidden="true"
+            />
+          ) : null}
+
+          <img
+            src={images[currentIndex]}
+            alt={`${title} image ${currentIndex + 1}`}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            onLoad={() => setIsImageLoading(false)}
+            onError={() => setIsImageLoading(false)}
+            className={`mx-auto block max-h-[76vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_18px_50px_rgba(0,0,0,0.45)] transition-opacity duration-200 ${
+              isImageLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+        </div>
 
         <div className="mt-3 flex items-center justify-between rounded-xl bg-[#123830] px-3 py-2 text-sm text-white">
           <p className="truncate pr-4">{title}</p>

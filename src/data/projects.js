@@ -145,6 +145,12 @@ const slugify = (value) =>
 
 const sortedDetails = [...details].sort((left, right) => right.date.localeCompare(left.date))
 const usedProjectIds = new Set()
+const projectBaseTitleCounts = sortedDetails.reduce((counts, project, index) => {
+  const baseTitle = (project.Project_name ?? `Project ${index + 1}`).replace(/>+$/, '').trim()
+  counts.set(baseTitle, (counts.get(baseTitle) ?? 0) + 1)
+  return counts
+}, new Map())
+const usedDisplayTitles = new Map()
 
 const getUniqueProjectId = (project, index, title) => {
   const baseId =
@@ -168,9 +174,15 @@ const getUniqueProjectId = (project, index, title) => {
 }
 
 export const allProjects = sortedDetails.map((project, index) => {
-  const title = (project.Project_name ?? `Project ${index + 1}`).replace(/>+$/, '').trim()
+  const baseTitle = (project.Project_name ?? `Project ${index + 1}`).replace(/>+$/, '').trim()
+  const hasDuplicateBaseTitle = (projectBaseTitleCounts.get(baseTitle) ?? 0) > 1
+  const locationLabel = project.location ?? 'Location unavailable'
+  const preferredDisplayTitle = hasDuplicateBaseTitle ? `${baseTitle} (${locationLabel})` : baseTitle
+  const usedTitleCount = usedDisplayTitles.get(preferredDisplayTitle) ?? 0
+  const title = usedTitleCount ? `${preferredDisplayTitle} #${usedTitleCount + 1}` : preferredDisplayTitle
   const pictureNames = Array.isArray(project.Pictures) ? project.Pictures : []
   const galleryImages = pictureNames.map((name) => resolveProjectImageSet(name)).filter(Boolean)
+  usedDisplayTitles.set(preferredDisplayTitle, usedTitleCount + 1)
 
   return {
     id: getUniqueProjectId(project, index, title),

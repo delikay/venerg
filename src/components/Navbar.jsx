@@ -138,6 +138,7 @@ const Navbar = () => {
               Let's Talk
               <ArrowUpRight
                 size={14}
+                aria-hidden="true"
                 className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </motion.a>
@@ -162,7 +163,11 @@ const Navbar = () => {
                 transition={{ duration: 0.2, ease: 'easeOut' }}
                 className="inline-flex"
               >
-                {isOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
+                {isOpen ? (
+                  <X size={18} strokeWidth={2.5} aria-hidden="true" />
+                ) : (
+                  <Menu size={18} strokeWidth={2.5} aria-hidden="true" />
+                )}
               </motion.span>
             </AnimatePresence>
           </motion.button>
@@ -255,7 +260,7 @@ const Navbar = () => {
                         className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#123830] px-4 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#0f2a20]"
                       >
                         Let's Talk
-                        <ArrowUpRight size={15} />
+                        <ArrowUpRight size={15} aria-hidden="true" />
                       </a>
                     </motion.div>
                   </div>

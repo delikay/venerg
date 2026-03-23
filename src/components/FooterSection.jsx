@@ -60,13 +60,13 @@ const FooterSection = () => {
 
             <div className="space-y-3 text-sm text-white/85">
               <p className="inline-flex items-center gap-2">
-                <Mail size={14} />
+                <Mail size={14} aria-hidden="true" />
                 <a href="mailto:venergielectric@gmail.com" className="hover:underline">
                   venergielectric@gmail.com
                 </a>
               </p>
               <p className="inline-flex items-center gap-2">
-                <Phone size={14} />
+                <Phone size={14} aria-hidden="true" />
                 <a href="tel:+2348144196054" className="hover:underline">
                   +2348144196054
                 </a>

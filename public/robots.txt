@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://venergi.vercel.app/sitemap.xml

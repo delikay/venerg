@@ -18,6 +18,7 @@ const ContactSection = () => {
     phone: '',
     service: '',
     message: '',
+    website: '',
   })
   const [submitState, setSubmitState] = useState('idle')
   const [submitMessage, setSubmitMessage] = useState('')
@@ -54,6 +55,13 @@ const ContactSection = () => {
     setSubmitState('loading')
     setSubmitMessage('')
 
+    // Honeypot trap: bots that fill this hidden field are ignored.
+    if (formState.website.trim()) {
+      setSubmitState('success')
+      setSubmitMessage('Message sent successfully. We will get back to you shortly.')
+      return
+    }
+
     try {
       const response = await fetch(submitEndpoint, {
         method: 'POST',
@@ -68,6 +76,7 @@ const ContactSection = () => {
           service: formState.service,
           message: formState.message,
           _subject: `New website enquiry: ${formState.service}`,
+          _honey: formState.website,
           _captcha: 'false',
         }),
       })
@@ -83,6 +92,7 @@ const ContactSection = () => {
         phone: '',
         service: '',
         message: '',
+        website: '',
       })
       setSubmitState('success')
       setSubmitMessage('Message sent successfully. We will get back to you shortly.')
@@ -111,6 +121,22 @@ const ContactSection = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.35 }}
         >
+          <div
+            className="pointer-events-none absolute left-[-9999px] top-[-9999px] opacity-0"
+            aria-hidden="true"
+          >
+            <label htmlFor="website-field">Website</label>
+            <input
+              id="website-field"
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formState.website}
+              onChange={handleChange}
+            />
+          </div>
+
           <motion.label variants={fadeInUp} className="block text-sm font-semibold text-[#123830]">
             Name
             <input
