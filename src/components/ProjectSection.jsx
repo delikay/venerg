@@ -86,8 +86,11 @@ const ProjectSection = () => {
               <img
                 src={featuredProject.image}
                 alt={featuredProject.title}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
+                fetchPriority="high"
+                width="1120"
+                height="512"
                 className="h-[28rem] w-full object-cover opacity-80 transition duration-500 group-hover:scale-105 sm:h-[32rem]"
               />
             </button>
@@ -137,7 +140,7 @@ const ProjectSection = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {projects.slice(0, 3).map((project) => (
+          {projects.slice(0, 3).map((project, index) => (
             <motion.article
               variants={fadeInUp}
               key={project.id}
@@ -152,8 +155,11 @@ const ProjectSection = () => {
                 <img
                   src={project.image}
                   alt={project.title}
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  width="400"
+                  height="176"
                   className="h-44 w-full object-cover"
                 />
                 {project.photoCount > 1 ? (

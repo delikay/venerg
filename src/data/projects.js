@@ -2,16 +2,116 @@ import detailsJson from './details.json?raw'
 
 const details = JSON.parse(detailsJson)
 
-const projectImageModules = import.meta.glob('../assets/*.{png,jpg,jpeg,webp,avif}', {
+const projectImageModules = import.meta.glob('../assets/**/*.{png,jpg,jpeg,webp,avif}', {
   eager: true,
   import: 'default',
 })
 
-const imagesByFileName = Object.fromEntries(
-  Object.entries(projectImageModules).map(([path, image]) => [path.split('/').pop(), image])
+const normalizedImageEntries = Object.entries(projectImageModules).map(([path, image]) => {
+  const normalizedPath = path.replace(/\\/g, '/').replace('../assets/', '')
+  return [normalizedPath, image]
+})
+
+const imagesByRelativePath = new Map(normalizedImageEntries)
+const imagesByFileName = new Map(
+  normalizedImageEntries.map(([relativePath, image]) => [relativePath.split('/').pop(), image])
 )
 
-const fallbackImage = imagesByFileName['benefits-energy.jpg']
+const normalizePictureName = (value = '') =>
+  value
+    .replace(/\\/g, '/')
+    .replace(/^\.?\//, '')
+    .replace(/^assets\//, '')
+    .trim()
+
+const splitFileName = (value) => {
+  const normalized = normalizePictureName(value)
+  const extensionSeparatorIndex = normalized.lastIndexOf('.')
+
+  if (extensionSeparatorIndex <= 0) {
+    return {
+      base: normalized,
+      extension: '',
+    }
+  }
+
+  return {
+    base: normalized.slice(0, extensionSeparatorIndex),
+    extension: normalized.slice(extensionSeparatorIndex + 1),
+  }
+}
+
+const getImageByCandidates = (candidates) => {
+  for (const candidateValue of candidates) {
+    const candidate = normalizePictureName(candidateValue)
+
+    if (!candidate) continue
+
+    if (imagesByRelativePath.has(candidate)) {
+      return imagesByRelativePath.get(candidate)
+    }
+
+    const fileName = candidate.split('/').pop()
+
+    if (imagesByFileName.has(fileName)) {
+      return imagesByFileName.get(fileName)
+    }
+  }
+
+  return null
+}
+
+const getFullImageCandidates = (pictureName) => {
+  const normalized = normalizePictureName(pictureName)
+  const fileName = normalized.split('/').pop()
+
+  return [
+    `projects/full/${normalized}`,
+    `projects/full/${fileName}`,
+    `full/${normalized}`,
+    `full/${fileName}`,
+    `projects/${normalized}`,
+    `projects/${fileName}`,
+    normalized,
+  ]
+}
+
+const getThumbImageCandidates = (pictureName) => {
+  const normalized = normalizePictureName(pictureName)
+  const fileName = normalized.split('/').pop()
+  const { base, extension } = splitFileName(normalized)
+  const thumbFileNames = extension
+    ? [`${base}-thumb.${extension}`, `${base}.thumb.${extension}`, `${base}_thumb.${extension}`]
+    : []
+
+  return [
+    `projects/thumbs/${normalized}`,
+    `projects/thumbs/${fileName}`,
+    `thumbs/${normalized}`,
+    `thumbs/${fileName}`,
+    ...thumbFileNames.map((name) => `projects/thumbs/${name}`),
+    ...thumbFileNames.map((name) => `thumbs/${name}`),
+    ...thumbFileNames,
+    normalized,
+  ]
+}
+
+const resolveProjectImageSet = (pictureName) => {
+  const fullImage = getImageByCandidates(getFullImageCandidates(pictureName))
+  const thumbImage = getImageByCandidates(getThumbImageCandidates(pictureName)) ?? fullImage
+
+  if (!fullImage && !thumbImage) return null
+
+  return {
+    name: normalizePictureName(pictureName),
+    full: fullImage ?? thumbImage,
+    thumb: thumbImage ?? fullImage,
+  }
+}
+
+const fallbackImageName = 'benefits-energy.jpg'
+const fallbackFullImage = getImageByCandidates(getFullImageCandidates(fallbackImageName))
+const fallbackThumbImage = getImageByCandidates(getThumbImageCandidates(fallbackImageName)) ?? fallbackFullImage
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -70,7 +170,7 @@ const getUniqueProjectId = (project, index, title) => {
 export const allProjects = sortedDetails.map((project, index) => {
   const title = (project.Project_name ?? `Project ${index + 1}`).replace(/>+$/, '').trim()
   const pictureNames = Array.isArray(project.Pictures) ? project.Pictures : []
-  const gallery = pictureNames.map((name) => imagesByFileName[name]).filter(Boolean)
+  const galleryImages = pictureNames.map((name) => resolveProjectImageSet(name)).filter(Boolean)
 
   return {
     id: getUniqueProjectId(project, index, title),
@@ -80,10 +180,11 @@ export const allProjects = sortedDetails.map((project, index) => {
     dateLabel: formatProjectDate(project.date),
     description: project.description ?? '',
     type: inferProjectType(title),
-    image: gallery[0] ?? fallbackImage,
-    gallery,
+    image: galleryImages[0]?.thumb ?? fallbackThumbImage,
+    gallery: galleryImages.map((image) => image.full).filter(Boolean),
+    galleryThumbs: galleryImages.map((image) => image.thumb).filter(Boolean),
     pictureNames,
-    photoCount: gallery.length,
+    photoCount: galleryImages.length,
   }
 })
 
@@ -95,10 +196,11 @@ const emptyProjectFallback = {
   dateLabel: 'Updating',
   description: 'Recent installation details will appear here shortly.',
   type: 'Installation',
-  image: fallbackImage,
-  gallery: fallbackImage ? [fallbackImage] : [],
+  image: fallbackThumbImage,
+  gallery: fallbackFullImage ? [fallbackFullImage] : [],
+  galleryThumbs: fallbackThumbImage ? [fallbackThumbImage] : [],
   pictureNames: [],
-  photoCount: fallbackImage ? 1 : 0,
+  photoCount: fallbackFullImage ? 1 : 0,
 }
 
 export const featuredProject = allProjects[0] ?? emptyProjectFallback

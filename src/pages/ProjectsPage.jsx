@@ -50,8 +50,11 @@ const ProjectsPage = () => {
               <img
                 src={featuredProject.image}
                 alt={featuredProject.title}
+                loading="eager"
                 decoding="async"
                 fetchPriority="high"
+                width="1120"
+                height="512"
                 className="h-[32rem] w-full object-cover opacity-80 transition duration-500 group-hover:scale-105"
               />
             </button>
@@ -94,7 +97,7 @@ const ProjectsPage = () => {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <article
                 key={project.id}
                 className="overflow-hidden rounded-3xl border border-[#123830]/10 bg-white shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
@@ -108,8 +111,11 @@ const ProjectsPage = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    loading="lazy"
+                    loading={index < 2 ? 'eager' : 'lazy'}
                     decoding="async"
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                    width="400"
+                    height="176"
                     className="h-44 w-full object-cover"
                   />
                   {project.photoCount > 1 ? (

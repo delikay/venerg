@@ -39,6 +39,18 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
     }
   }, [isOpen, onClose, totalImages])
 
+  useEffect(() => {
+    if (!isOpen || totalImages < 2) return
+
+    const nextIndex = (currentIndex + 1) % totalImages
+    const previousIndex = (currentIndex - 1 + totalImages) % totalImages
+    const preloadNext = new Image()
+    const preloadPrevious = new Image()
+
+    preloadNext.src = images[nextIndex]
+    preloadPrevious.src = images[previousIndex]
+  }, [currentIndex, images, isOpen, totalImages])
+
   if (!isOpen || !totalImages) return null
 
   const goPrevious = () => {
@@ -91,6 +103,9 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
         <img
           src={images[currentIndex]}
           alt={`${title} image ${currentIndex + 1}`}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className="mx-auto block max-h-[76vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_18px_50px_rgba(0,0,0,0.45)]"
         />
 
