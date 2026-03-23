@@ -61,9 +61,10 @@ const ServicesSection = () => {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#f3f6f4] px-6 py-16 sm:px-10 lg:px-14 lg:py-24">
-      <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(20,76,61,0.24),_transparent_68%)]" />
-      <div className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(28,116,85,0.16),_transparent_68%)]" />
+    <section className="relative overflow-hidden bg-[linear-gradient(160deg,#ecf3ef_0%,#f4f8f6_42%,#e8f1ec_100%)] px-6 py-16 sm:px-10 lg:px-14 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(130deg,rgba(255,255,255,0.58)_0%,transparent_48%,rgba(18,56,48,0.05)_100%)]" />
+      <div className="pointer-events-none absolute -right-24 top-8 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(20,76,61,0.26),_transparent_68%)]" />
+      <div className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(28,116,85,0.18),_transparent_68%)]" />
 
       <div className="relative mx-auto max-w-[1120px]">
         <motion.div
@@ -85,7 +86,7 @@ const ServicesSection = () => {
         </motion.div>
 
         <motion.div
-          className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+          className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
           variants={cardsContainerVariants}
           initial="hidden"
           whileInView="show"
@@ -95,29 +96,31 @@ const ServicesSection = () => {
             <motion.article
               key={title}
               variants={cardVariants}
-              className="group relative overflow-hidden rounded-3xl border border-[#123830]/10 bg-white/70 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.08)] backdrop-blur"
+              className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/65 bg-[linear-gradient(155deg,rgba(255,255,255,0.96)_0%,rgba(246,251,249,0.92)_58%,rgba(234,242,238,0.9)_100%)] p-6 shadow-[0_16px_46px_rgba(10,34,27,0.10)] backdrop-blur-sm"
               transition={{ type: 'spring', stiffness: 260, damping: 22, mass: 0.75 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.99 }}
               whileHover={
                 shouldReduceMotion
                   ? undefined
                   : {
-                      y: -10,
-                      scale: 1.015,
-                      borderColor: 'rgba(18,56,48,0.30)',
-                      boxShadow: '0 22px 56px rgba(0,0,0,0.16)',
+                      y: -8,
+                      scale: 1.01,
+                      borderColor: 'rgba(18,56,48,0.24)',
+                      boxShadow: '0 24px 56px rgba(9,30,24,0.17)',
                     }
               }
               style={shouldReduceMotion ? undefined : { transformOrigin: 'center bottom' }}
             >
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[76%] bg-[linear-gradient(to_top,_rgba(8,30,24,0.58)_0%,_rgba(18,56,48,0.36)_40%,_rgba(18,56,48,0.14)_64%,_transparent_100%)] opacity-0 transition-all duration-500 group-hover:h-[90%] group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0)_52%,rgba(15,42,33,0.06)_100%)] opacity-75 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(18,56,48,0.34),transparent)]" />
+              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,_rgba(19,66,54,0.2)_0%,_transparent_70%)] opacity-60 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100" />
 
-              <div className="mb-6 inline-flex rounded-2xl bg-[#123830] p-3 text-white transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
+              <div className="relative z-10 mb-7 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-[#123830]/12 bg-[radial-gradient(circle_at_30%_20%,#2f6c5b_0%,#123830_68%)] text-white shadow-[0_10px_24px_rgba(18,56,48,0.24)] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
                 <Icon size={20} />
               </div>
 
-              <h3 className="relative z-10 text-xl font-semibold text-[#123830]">{title}</h3>
-              <p className="relative z-10 mt-3 text-sm leading-7 text-[#123830]/85">{description}</p>
+              <h3 className="relative z-10 text-[1.08rem] font-semibold leading-7 tracking-[-0.01em] text-[#102f29]">{title}</h3>
+              <p className="relative z-10 mt-3 text-sm leading-7 text-[#1b463c]/85">{description}</p>
             </motion.article>
           ))}
         </motion.div>
