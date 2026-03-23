@@ -8,8 +8,9 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
 
   // Sync state with initialIndex prop when it changes
   useEffect(() => {
-    setCurrentIndex(initialIndex)
-    setIsImageLoading(true)
+    if (currentIndex !== initialIndex) {
+      setCurrentIndex(initialIndex)
+    }
   }, [initialIndex])
 
   useEffect(() => {
@@ -53,18 +54,15 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
     preloadPrevious.src = images[previousIndex]
   }, [currentIndex, images, isOpen, totalImages])
 
-  useEffect(() => {
-    if (!isOpen) return
-    setIsImageLoading(true)
-  }, [currentIndex, isOpen])
-
   if (!isOpen || !totalImages) return null
 
   const goPrevious = () => {
+    setIsImageLoading(true)
     setCurrentIndex((index) => (index - 1 + totalImages) % totalImages)
   }
 
   const goNext = () => {
+    setIsImageLoading(true)
     setCurrentIndex((index) => (index + 1) % totalImages)
   }
 
