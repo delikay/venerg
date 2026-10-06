@@ -6,13 +6,6 @@ const ProjectGalleryModal = ({ isOpen, images, title, initialIndex = 0, onClose 
   const [isImageLoading, setIsImageLoading] = useState(true)
   const totalImages = images.length
 
-  // Sync state with initialIndex prop when it changes
-  useEffect(() => {
-    if (currentIndex !== initialIndex) {
-      setCurrentIndex(initialIndex)
-    }
-  }, [initialIndex])
-
   useEffect(() => {
     if (!isOpen) return
 

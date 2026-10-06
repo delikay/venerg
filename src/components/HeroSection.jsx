@@ -45,9 +45,9 @@ const HeroSection = () => {
             variants={itemVariants}
             className="text-[clamp(3.6rem,13vw,30rem)] font-semibold leading-[0.88] tracking-wide text-[#0f3a33] lg:text-[clamp(4rem,15vw,35rem)]"
           >
-            Clean
+            Reliable
             <br />
-            Energy
+            Power
           </motion.h1>
 
           <motion.div
@@ -106,26 +106,43 @@ const HeroSection = () => {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-end sm:justify-between">
-          <motion.p
-            variants={itemVariants}
-            className="max-w-sm text-base leading-8 text-[#123830] sm:text-lg"
-          >
-            Switch to clean, renewable solar energy and start saving on
-            electricity bills today.
-          </motion.p>
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#123830]/80">
+            <span className="rounded-full border border-[#123830]/15 bg-white/70 px-3 py-2">Lagos-based</span>
+            <span className="rounded-full border border-[#123830]/15 bg-white/70 px-3 py-2">Home & business</span>
+            <span className="rounded-full border border-[#123830]/15 bg-white/70 px-3 py-2">Installation & support</span>
+          </motion.div>
 
-          <motion.button
+          <motion.div
             variants={itemVariants}
-            type="button"
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex w-fit items-center gap-2 rounded-xl bg-[#153728] px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#0f2a20]"
-            whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-            whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            className="flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            Get Started
-            <ArrowRight size={16} />
-          </motion.button>
+            <motion.a
+              href="/#contact"
+              className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-[#153728] px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#0f2a20]"
+              whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            >
+              Request a free quote
+              <ArrowRight size={16} />
+            </motion.a>
+
+            <motion.a
+              href="tel:+2348144196054"
+              className="inline-flex w-fit items-center justify-center gap-2 rounded-xl border border-[#123830]/20 bg-white/80 px-7 py-3.5 text-sm font-medium text-[#123830] transition-colors hover:bg-white"
+              whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+            >
+              Call now
+            </motion.a>
+          </motion.div>
         </div>
+
+        <motion.p
+          variants={itemVariants}
+          className="mt-6 max-w-xl text-base leading-8 text-[#123830] sm:text-lg"
+        >
+          Trusted solar, inverter, CCTV, and security solutions for homes and businesses across Lagos.
+        </motion.p>
       </div>
     </motion.section>
   );

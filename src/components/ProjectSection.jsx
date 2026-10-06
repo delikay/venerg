@@ -193,6 +193,7 @@ const ProjectSection = () => {
 
       {activeGallery ? (
         <ProjectGalleryModal
+          key={`${activeGallery.title}-${activeGallery.startIndex}`}
           isOpen
           images={activeGallery.images}
           title={activeGallery.title}

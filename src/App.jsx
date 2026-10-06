@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
+import TrustSection from './components/TrustSection'
 import ServicesSection from './components/ServicesSection'
 import AboutSection from './components/AboutSection'
 import ProjectSection from './components/ProjectSection'
@@ -13,6 +14,7 @@ const HomePage = () => {
       <Navbar />
 
       <HeroSection />
+      <TrustSection />
       <div id="about">
         <AboutSection />
       </div>

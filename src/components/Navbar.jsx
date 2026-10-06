@@ -135,7 +135,7 @@ const Navbar = () => {
               whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
             >
-              Let's Talk
+              Request a quote
               <ArrowUpRight
                 size={14}
                 aria-hidden="true"
