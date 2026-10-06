@@ -40,69 +40,70 @@ const HeroSection = () => {
       animate="show"
     >
       <div className="mx-auto max-w-[1120px]">
-        <div className="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_350px] lg:gap-10">
-          <motion.h1
-            variants={itemVariants}
-            className="text-[clamp(3.6rem,13vw,30rem)] font-semibold leading-[0.88] tracking-wide text-[#0f3a33] lg:text-[clamp(4rem,15vw,35rem)]"
-          >
-            Reliable
-            <br />
-            Power
-          </motion.h1>
+        <div className="relative mt-10 lg:mt-12">
+          <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex">
+            <div className="relative h-[420px] w-full max-w-[980px]">
+              <motion.img
+                src={heroTopImage}
+                alt="Solar panels under blue sky"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                className={`${cardBaseClasses} absolute left-[10%] top-[12%] -rotate-12`}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: [0, -10, 0],
+                      }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 4.8,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeInOut",
+                      }
+                }
+              />
+              <motion.img
+                src={heroBottomImage}
+                alt="Solar farm from above"
+                loading="eager"
+                decoding="async"
+                fetchPriority="low"
+                className={`${cardBaseClasses} absolute right-[12%] top-[42%] rotate-[24deg]`}
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: [0, 10, 0],
+                      }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 5.2,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeInOut",
+                      }
+                }
+              />
+            </div>
+          </div>
 
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center gap-4 lg:flex-col lg:items-start lg:justify-start lg:gap-10 lg:pt-10"
-          >
-            <motion.img
-              src={heroTopImage}
-              alt="Solar panels under blue sky"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-              className={`${cardBaseClasses} -rotate-12 lg:ml-[-7rem]`}
-              animate={
-                shouldReduceMotion
-                  ? undefined
-                  : {
-                      y: [0, -10, 0],
-                    }
-              }
-              transition={
-                shouldReduceMotion
-                  ? undefined
-                  : {
-                      duration: 4.8,
-                      repeat: Number.POSITIVE_INFINITY,
-                      ease: "easeInOut",
-                    }
-              }
-            />
-            <motion.img
-              src={heroBottomImage}
-              alt="Solar farm from above"
-              loading="eager"
-              decoding="async"
-              fetchPriority="low"
-              className={`${cardBaseClasses} rotate-[24deg]`}
-              animate={
-                shouldReduceMotion
-                  ? undefined
-                  : {
-                      y: [0, 10, 0],
-                    }
-              }
-              transition={
-                shouldReduceMotion
-                  ? undefined
-                  : {
-                      duration: 5.2,
-                      repeat: Number.POSITIVE_INFINITY,
-                      ease: "easeInOut",
-                    }
-              }
-            />
-          </motion.div>
+          <div className="relative z-10 lg:max-w-[760px]">
+            <motion.h1
+              variants={itemVariants}
+              className="text-[clamp(3.6rem,13vw,30rem)] font-semibold leading-[0.88] tracking-wide text-[#0f3a33] lg:text-[clamp(4rem,15vw,35rem)]"
+            >
+              Reliable
+              <br />
+              Power
+            </motion.h1>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-5 sm:mt-8 sm:flex-row sm:items-end sm:justify-between">
