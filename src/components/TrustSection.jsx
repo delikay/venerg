@@ -83,15 +83,13 @@ const ctaHighlights = [
 ]
 
 const serviceAreas = [
-  'Lekki',
-  'Victoria Island',
-  'Ikoyi',
-  'Ikeja',
-  'Yaba',
-  'Surulere',
-  'Ajah',
-  'Lagos Mainland',
-  'Estates & commercial sites',
+  'Lagos State',
+  'Ogun State',
+  'Oyo State',
+  'Abuja (FCT)',
+  'Ondo State',
+  'Ekiti State',
+  'Commercial & residential projects',
 ]
 
 const TrustSection = () => {
@@ -192,12 +190,12 @@ const TrustSection = () => {
             <div className="max-w-2xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#123830]/70">Service areas</p>
               <h3 className="mt-3 text-[clamp(1.8rem,4vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-[#123830]">
-                Serving homes, offices, estates, and commercial properties across Lagos.
+                Serving homes, offices, estates, and commercial properties across Lagos and other states in Nigeria.
               </h3>
             </div>
 
             <div className="inline-flex rounded-full border border-[#123830]/15 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#123830]">
-              Lagos & nearby communities
+              Lagos & other states
             </div>
           </div>
 
