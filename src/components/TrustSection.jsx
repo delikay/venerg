@@ -82,6 +82,18 @@ const ctaHighlights = [
   'Professional installation & support',
 ]
 
+const serviceAreas = [
+  'Lekki',
+  'Victoria Island',
+  'Ikoyi',
+  'Ikeja',
+  'Yaba',
+  'Surulere',
+  'Ajah',
+  'Lagos Mainland',
+  'Estates & commercial sites',
+]
+
 const TrustSection = () => {
   const shouldReduceMotion = useReducedMotion()
 
@@ -167,6 +179,38 @@ const TrustSection = () => {
               <p className="mt-3 text-2xl font-semibold text-white">{value}</p>
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div
+          className="rounded-[2rem] border border-[#123830]/10 bg-[#eaf3ef] p-6 text-[#123830] shadow-[0_16px_36px_rgba(18,56,48,0.08)] sm:p-8"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+        >
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#123830]/70">Service areas</p>
+              <h3 className="mt-3 text-[clamp(1.8rem,4vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.03em] text-[#123830]">
+                Serving homes, offices, estates, and commercial properties across Lagos.
+              </h3>
+            </div>
+
+            <div className="inline-flex rounded-full border border-[#123830]/15 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#123830]">
+              Lagos & nearby communities
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            {serviceAreas.map((area) => (
+              <span
+                key={area}
+                className="rounded-full border border-[#123830]/10 bg-white px-3 py-2 text-sm font-medium text-[#123830]/85"
+              >
+                {area}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div
